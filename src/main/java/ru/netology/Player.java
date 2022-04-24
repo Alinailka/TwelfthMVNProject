@@ -1,9 +1,9 @@
 package ru.netology;
 
-public class Player implements Comparable<Player>{
+public class Player {
     private int id;
-   private String name;
-  private int strength;
+    private String name;
+    private int strength;
 
     public Player(int id, String name, int strength) {
         this.id = id;
@@ -36,11 +36,5 @@ public class Player implements Comparable<Player>{
 
     public void setStrength(int strength) {
         this.strength = strength;
-    }
-
-    @Override
-    public int compareTo(Player one) {
-        Player two = (Player) one;
-        return this.strength - two.strength;
     }
 }

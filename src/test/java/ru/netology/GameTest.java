@@ -10,69 +10,62 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameTest {
 
     Game game = new Game();
-    Player[] players = new Player[0];
 
     Player first = new Player(1, "Petya", 1);
     Player second = new Player(2, "Vasya", 2);
     Player third = new Player(3, "Vanya", 3);
     Player fourth = new Player(4, "Stepa", 4);
-    Player fifth = new Player(5, "Alesha", 5);
-    @Test
-    public void add() {
+    Player fifth = new Player(5, "Alesha", 4);
+
+    @BeforeEach
+    public void preAdd() {
         game.registered(first);
         game.registered(second);
         game.registered(third);
         game.registered(fourth);
+    }
+
+    @Test
+    public void registered() {
+
         Player[] expected = new Player[]{first, second, third, fourth};
         Player[] actual = game.players.toArray(new Player[0]);
         assertArrayEquals(expected, actual);
     }
-    @Test
-    public void round() {
-        game.registered(first);
-        game.registered(second);
-        game.registered(third);
-        game.registered(fourth);
 
-        int expected = 2;
-        int actual = game.round("Petya", "Vasya");
+    @Test
+    public void roundWinnerFirst() {
+        int expected = 1;
+        int actual = game.round("Vasya", "Petya");
         assertEquals(expected, actual);
     }
-//    @Test
-//    void register() {
-//        game.register(first);
-//        game.register(second);
-//        game.register(third);
-//        game.register(fourth);
-//        Player [] expected = new Player[]{first, second, third, fourth};
-//        Player [] actual = game.players;
-//        assertArrayEquals(expected, actual);
-//    }
-//
-//    @Test
-//    void round() {
-//        game.register(first);
-//        game.register(second);
-//        game.round("Petya", "Vasya");
-//        Player [] expected = new Player[]{first, second};
-//        Player [] actual = game.round("Petya", "Vasya");
-//        assertArrayEquals(expected, actual);
-//    }
-//    @Test
-//    void roundIfPlayerNoRegistered() {
-//        game.register(fourth);
-//        assertThrows(NotRegisteredException.class, () -> {
-//            game.round("Stepa", "Alesha");
-//        });
-//    }
-//    @Test
-//    void sortByStrength() {
-//        game.register(first);
-//        game.register(second);
-//        Player[] expected = new Player[]{second,first,};
-//        Player[] actual = new Player[]{second,first};
-//
-//        Arrays.sort(actual);
-//      assertArrayEquals(expected, actual);
-//    }
+
+    @Test
+    public void roundWinnerSecond() {
+        int expected = 2;
+        int actual = game.round("Vanya", "Stepa");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void roundDraw() {
+        game.registered(fifth);
+        int expected = 0;
+        int actual = game.round("Stepa", "Alesha");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void roundFirstNoRegistered() {
+        assertThrows(NotRegisteredException.class, () -> {
+            game.round("Alesha", "Stepa");
+        });
+    }
+
+    @Test
+    public void roundSecondNoRegistered() {
+        assertThrows(NotRegisteredException.class, () -> {
+            game.round("Stepa", "Alesha");
+        });
+    }
 }

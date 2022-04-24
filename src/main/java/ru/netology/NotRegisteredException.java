@@ -1,8 +1,7 @@
 package ru.netology;
 
-public class NotRegisteredException extends RuntimeException{
-    public NotRegisteredException(String name) {
-        super("Участник с именем " + name+" не прошёл регистрацию");
+public class NotRegisteredException extends RuntimeException {
+    public NotRegisteredException() {
+        super("Один из участников не прошёл регистрацию");
     }
-
 }

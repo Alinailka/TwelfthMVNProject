@@ -30,7 +30,7 @@ public class Game {
 
     private Player find(String name) {
         for (Player player : players) {
-            if (player.getName() == name) {
+            if (player.getName().equals(name)) {
                 return player;
             }
         }
